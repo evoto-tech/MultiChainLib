@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -382,22 +383,29 @@ namespace MultiChainLib
             return this.ExecuteAsync<bool>("verifychain", 0, (int)type, numBlocks);
         }
 
-        // not implemented -- contact us with specific implementation requirements and we'll implement this...
-        public Task<JsonRpcResponse<string>> CreateRawTransactionAync()
+        public Task<JsonRpcResponse<string>> CreateRawTransactionAync(
+            IEnumerable<CreateRawTransactionTxIn> txIds = null, IEnumerable<CreateRawTransactionAmount> assets = null)
         {
-            throw new NotImplementedException("This operation has not been implemented.");
+            dynamic flexible = new ExpandoObject();
+            var dictionary = (IDictionary<string, object>) flexible;
+            if (assets != null)
+            {
+                foreach (var asset in assets)
+                {
+                    dictionary.Add(asset.Address, asset.StringifyAmount());
+                }
+            }
+            return ExecuteAsync<string>("createrawtransaction", 0, txIds, dictionary);
         }
 
-        // not implemented -- contact us with specific implementation requirements and we'll implement this...
-        public Task<JsonRpcResponse<string>> SendRawTransactionAsync()
+        public Task<JsonRpcResponse<string>> SendRawTransactionAsync(string hex)
         {
-            throw new NotImplementedException("This operation has not been implemented.");
+            return this.ExecuteAsync<string>("sendrawtransaction", 0, hex);
         }
 
-        // not implemented -- contact us with specific implementation requirements and we'll implement this...
-        public Task<JsonRpcResponse<string>> SignRawTransactionAsync()
+        public Task<JsonRpcResponse<SignRawTransactionResponse>> SignRawTransactionAsync(string hex)
         {
-            throw new NotImplementedException("This operation has not been implemented.");
+            return this.ExecuteAsync<SignRawTransactionResponse>("signrawtransaction", 0, hex);
         }
 
         public Task<JsonRpcResponse<bool>> PrioritiseTransactionAsync(string txId, decimal priority, int feeSatoshis)

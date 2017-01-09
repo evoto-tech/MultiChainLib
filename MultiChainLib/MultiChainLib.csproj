@@ -58,6 +58,8 @@
     <Compile Include="Model\BlockchainInfoResponse.cs" />
     <Compile Include="Model\BlockResponse.cs" />
     <Compile Include="Model\ChainTipResponse.cs" />
+    <Compile Include="Model\CreateRawTransactionAmount.cs" />
+    <Compile Include="Model\CreateRawTransactionTxIn.cs" />
     <Compile Include="Model\GetInfoResponse.cs" />
     <Compile Include="Model\GetServerInfoResponse.cs" />
     <Compile Include="Model\GetTransactionResponse.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Model\ReceivedResponse.cs" />
     <Compile Include="Model\ScriptResponse.cs" />
     <Compile Include="Model\ScriptSigResponse.cs" />
+    <Compile Include="Model\SignRawTransactionResponse.cs" />
     <Compile Include="Model\TransactionResponse.cs" />
     <Compile Include="Model\ScriptPubKeyResponse.cs" />
     <Compile Include="Model\TxAssetResponse.cs" />
