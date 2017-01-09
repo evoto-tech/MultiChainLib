@@ -383,6 +383,11 @@ namespace MultiChainLib
             return this.ExecuteAsync<bool>("verifychain", 0, (int)type, numBlocks);
         }
 
+        public Task<JsonRpcResponse<string>> AppendRawDataAsync(string txId, object data)
+        {
+            return this.ExecuteAsync<string>("appendrawdata", 0, txId, data);
+        }
+
         public Task<JsonRpcResponse<string>> CreateRawTransactionAync(
             IEnumerable<CreateRawTransactionTxIn> txIds = null, IEnumerable<CreateRawTransactionAmount> assets = null)
         {
