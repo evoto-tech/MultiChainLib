@@ -1,14 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class NetworkInfoResponse
     {
+        public NetworkInfoResponse()
+        {
+            Networks = new List<NetworkResponse>();
+            LocalAddresses = new List<LocalAddress>();
+        }
+
         [JsonProperty("version")]
         public int Version { get; set; }
 
@@ -34,12 +36,18 @@ namespace MultiChainLib
         public decimal RelayFee { get; set; }
 
         [JsonProperty("localaddresses")]
-        public List<string> LocalAddresses { get; set; }
+        public List<LocalAddress> LocalAddresses { get; set; }
+    }
 
-        public NetworkInfoResponse()
-        {
-            this.Networks = new List<NetworkResponse>();
-            this.LocalAddresses = new List<string>();
-        }
+    public class LocalAddress
+    {
+        [JsonProperty("address")]
+        public string IpAddress { get; set; }
+
+        [JsonProperty("port")]
+        public short Port { get; set; }
+
+        [JsonProperty("score")]
+        public int Score { get; set; }
     }
 }

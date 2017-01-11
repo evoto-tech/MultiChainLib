@@ -12,9 +12,7 @@ namespace MultiChainLib.Harness
     {
         internal async Task RunAsync()
         {
-            //var client = new MultiChainClient("192.168.40.131", 50009, false, "multichainrpc", "QWYLSyhv44EiSKFwyvRufNBcqtJyd8QJi7NUzm2xG2X", "chain_600bf49a419e7fb3fa0530de6e");
-            //var client = new MultiChainClient("localhost", 8911, false, null, null, "chain_600bf49a419e7fb3fa0530de6e", "7ae614be3a222c8ef0f337504d046b46805baaa7f787381db33cb2e1f4b562e6");
-            var client = new MultiChainClient("rpc.pbjcloud.com", 443, true, null, null, "chain_3c03d89be612441af8a5c148ca", "54cd2dd2edc0a87a05a7f7e7b0f13e9913cf6de3ca202df232b21d83ccc93fa2");
+            var client = new MultiChainClient("localhost", 8911, false, "evoto", "evoto", "test");
 
             var isPbj = false;
 
@@ -343,42 +341,42 @@ namespace MultiChainLib.Harness
             Console.WriteLine();
 
             // list accounts...
-            Console.WriteLine("*** listaccounts ***");
-            var listAccounts = await client.ListAccountsAsync();
-            listAccounts.AssertOk();
-            foreach (var key in listAccounts.Result.Keys)
-                Console.WriteLine("{0}, balance: {1}", key, listAccounts.Result[key]);
-            Console.WriteLine();
+            //Console.WriteLine("*** listaccounts ***");
+            //var listAccounts = await client.ListAccountsAsync();
+            //listAccounts.AssertOk();
+            //foreach (var key in listAccounts.Result.Keys)
+            //    Console.WriteLine("{0}, balance: {1}", key, listAccounts.Result[key]);
+            //Console.WriteLine();
 
             // get account...
-            Console.WriteLine("*** getaddressesbyaccount ***");
-            var getAddressesByAccount = await client.GetAddressesByAccountAsync(null);
-            getAddressesByAccount.AssertOk();
-            foreach (var address in getAddressesByAccount.Result)
-                Console.WriteLine(address);
-            Console.WriteLine();
+            //Console.WriteLine("*** getaddressesbyaccount ***");
+            //var getAddressesByAccount = await client.GetAddressesByAccountAsync(null);
+            //getAddressesByAccount.AssertOk();
+            //foreach (var address in getAddressesByAccount.Result)
+            //    Console.WriteLine(address);
+            //Console.WriteLine();
 
-            // get account address...
-            Console.WriteLine("*** getaccountaddress ***");
-            var getAccountAddress = await client.GetAccountAddressAsync(null);
-            getAccountAddress.AssertOk();
-            Console.WriteLine(getAccountAddress.Result);
-            Console.WriteLine();
+            //// get account address...
+            //Console.WriteLine("*** getaccountaddress ***");
+            //var getAccountAddress = await client.GetAccountAddressAsync(null);
+            //getAccountAddress.AssertOk();
+            //Console.WriteLine(getAccountAddress.Result);
+            //Console.WriteLine();
 
-            // get account...
-            Console.WriteLine("*** getaccount ***");
-            var getAccount = await client.GetAccountAsync(getAddressesByAccount.Result.First());
-            getAccount.AssertOk();
-            Console.WriteLine(getAccount.Result);
-            Console.WriteLine();
+            //// get account...
+            //Console.WriteLine("*** getaccount ***");
+            //var getAccount = await client.GetAccountAsync(getAddressesByAccount.Result.First());
+            //getAccount.AssertOk();
+            //Console.WriteLine(getAccount.Result);
+            //Console.WriteLine();
 
             // get address balances...
-            Console.WriteLine("*** getaddressbalances ***");
-            var getAddressBalances = await client.GetAddressBalancesAsync(getAddressesByAccount.Result.First());
-            getAddressBalances.AssertOk();
-            foreach (var balance in getAddressBalances.Result)
-                Console.WriteLine(balance);
-            Console.WriteLine();
+            //Console.WriteLine("*** getaddressbalances ***");
+            //var getAddressBalances = await client.GetAddressBalancesAsync(getAddressesByAccount.Result.First());
+            //getAddressBalances.AssertOk();
+            //foreach (var balance in getAddressBalances.Result)
+            //    Console.WriteLine(balance);
+            //Console.WriteLine();
 
             // list address groupings...
             Console.WriteLine("*** listaddressgroupings ***");
@@ -419,22 +417,22 @@ namespace MultiChainLib.Harness
             //Console.WriteLine();
 
             // get received by account...
-            Console.WriteLine("*** getreceivedbyaccount ***");
-            var getReceivedByAccount = await client.GetReceivedByAccountAsync();
-            getReceivedByAccount.AssertOk();
-            Console.WriteLine(getReceivedByAccount.Result);
-            Console.WriteLine();
+            //Console.WriteLine("*** getreceivedbyaccount ***");
+            //var getReceivedByAccount = await client.GetReceivedByAccountAsync();
+            //getReceivedByAccount.AssertOk();
+            //Console.WriteLine(getReceivedByAccount.Result);
+            //Console.WriteLine();
 
             // list transactions...
-            Console.WriteLine("*** listtransactions ***");
-            var listTransactions = await client.ListTransactionsAsync();
-            listTransactions.AssertOk();
-            foreach (var tx in listTransactions.Result)
-                Console.WriteLine("{0}, tx: {1}", tx.Address, tx.TxId);
-            Console.WriteLine();
+            //Console.WriteLine("*** listtransactions ***");
+            //var listTransactions = await client.ListTransactionsAsync();
+            //listTransactions.AssertOk();
+            //foreach (var tx in listTransactions.Result)
+            //    Console.WriteLine("{0}, tx: {1}", tx.Address, tx.TxId);
+            //Console.WriteLine();
 
             // capture...
-            var txId = listTransactions.Result.Last().TxId;
+            var txId = listUnspent.Result.Last().TxId;
 
             // list transactions...
             Console.WriteLine("*** gettransaction ***");
@@ -446,13 +444,13 @@ namespace MultiChainLib.Harness
             Console.WriteLine();
 
             // get tx out...
-            Console.WriteLine("*** gettxout ***");
-            var getTxOut = await client.GetTxOutAsync(txId);
-            getTxOut.AssertOk();
-            Console.WriteLine("{0}, asm: {1}", getTxOut.Result.BestBlock, getTxOut.Result.ScriptPubKey.Asm);
-            foreach (var walk in getTxOut.Result.Assets)
-                Console.WriteLine("{0}, ref: {1}", walk.Name, walk.AssetRef);
-            Console.WriteLine();
+            //Console.WriteLine("*** gettxout ***");
+            //var getTxOut = await client.GetTxOutAsync(txId);
+            //getTxOut.AssertOk();
+            //Console.WriteLine("{0}, asm: {1}", getTxOut.Result.BestBlock, getTxOut.Result.ScriptPubKey.Asm);
+            //foreach (var walk in getTxOut.Result.Assets)
+            //    Console.WriteLine("{0}, ref: {1}", walk.Name, walk.AssetRef);
+            //Console.WriteLine();
 
             // get raw transaction...
             Console.WriteLine("*** getrawtransaction ***");
@@ -502,20 +500,20 @@ namespace MultiChainLib.Harness
             Console.WriteLine();
 
             // list received by address...
-            Console.WriteLine("*** listreceivedbyaddress ***");
-            var listReceivedByAddress = await client.ListReceivedByAddressAsync();
-            listReceivedByAddress.AssertOk();
-            foreach(var walk in listReceivedByAddress.Result)
-                Console.WriteLine("{0}, confirmations: {1}", walk.Address, walk.Confirmations);
-            Console.WriteLine();
+            //Console.WriteLine("*** listreceivedbyaddress ***");
+            //var listReceivedByAddress = await client.ListReceivedByAddressAsync();
+            //listReceivedByAddress.AssertOk();
+            //foreach(var walk in listReceivedByAddress.Result)
+            //    Console.WriteLine("{0}, confirmations: {1}", walk.Address, walk.Confirmations);
+            //Console.WriteLine();
 
             // list received by account...
-            Console.WriteLine("*** listreceivedbyaccount ***");
-            var listReceivedByAccount = await client.ListReceivedByAccountAsync();
-            listReceivedByAccount.AssertOk();
-            foreach (var walk in listReceivedByAccount.Result)
-                Console.WriteLine("{0}, confirmations: {1}", walk.Account, walk.Confirmations);
-            Console.WriteLine();
+            //Console.WriteLine("*** listreceivedbyaccount ***");
+            //var listReceivedByAccount = await client.ListReceivedByAccountAsync();
+            //listReceivedByAccount.AssertOk();
+            //foreach (var walk in listReceivedByAccount.Result)
+            //    Console.WriteLine("{0}, confirmations: {1}", walk.Account, walk.Confirmations);
+            //Console.WriteLine();
 
             // list permissions...
             Console.WriteLine("*** listpermissions ***");
@@ -553,18 +551,18 @@ namespace MultiChainLib.Harness
             Console.WriteLine();
 
             // set account...
-            Console.WriteLine("*** setaccount ***");
-            var setAccount = await client.SetAccountAsync(four, this.GetRandomName("account"));
-            setAccount.AssertOk();
-            Console.WriteLine(setAccount.Result);
-            Console.WriteLine();
+            //Console.WriteLine("*** setaccount ***");
+            //var setAccount = await client.SetAccountAsync(four, this.GetRandomName("account"));
+            //setAccount.AssertOk();
+            //Console.WriteLine(setAccount.Result);
+            //Console.WriteLine();
 
             // get received by address...
-            Console.WriteLine("*** getreceivedbyaddress ***");
-            var getReceivedByAddress = await client.GetReceivedByAddressAsync(one);
-            getReceivedByAddress.AssertOk();
-            Console.WriteLine(getReceivedByAddress.Result);
-            Console.WriteLine();
+            //Console.WriteLine("*** getreceivedbyaddress ***");
+            //var getReceivedByAddress = await client.GetReceivedByAddressAsync(one);
+            //getReceivedByAddress.AssertOk();
+            //Console.WriteLine(getReceivedByAddress.Result);
+            //Console.WriteLine();
 
             // dump priv key...
             Console.WriteLine("*** dumpprivkey ***");
@@ -596,11 +594,11 @@ namespace MultiChainLib.Harness
                 Console.WriteLine(walk);
             Console.WriteLine();
 
-            Console.WriteLine("*** addmultisigaddress ***");
-            var addMultiSigAddress = await client.AddMultiSigAddressAsync(5, toUse);
-            addMultiSigAddress.AssertOk();
-            Console.WriteLine(addMultiSigAddress.Result);
-            Console.WriteLine();
+            //Console.WriteLine("*** addmultisigaddress ***");
+            //var addMultiSigAddress = await client.AddMultiSigAddressAsync(5, toUse);
+            //addMultiSigAddress.AssertOk();
+            //Console.WriteLine(addMultiSigAddress.Result);
+            //Console.WriteLine();
 
             // issue...
             Console.WriteLine("*** issue ***");
@@ -609,7 +607,7 @@ namespace MultiChainLib.Harness
             Console.WriteLine(issue.Result);
             Console.WriteLine();
 
-            // issue...
+            // issuefrom...
             Console.WriteLine("*** issuefrom ***");
             assetName = "asset_" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 24);
             var issueFrom = await client.IssueFromAsync(one, two, assetName, 1000000, 0.1M);
@@ -702,6 +700,38 @@ namespace MultiChainLib.Harness
             verifyChain.AssertOk();
             Console.WriteLine(verifyChain.Result);
             Console.WriteLine();
+
+            // create raw transaction...
+            Console.WriteLine("*** createrawtransaction ***");
+
+            var t = new CreateRawTransactionTxIn
+            {
+                TxId = listUnspent.Result.Last(x => x.Amount >= 1).TxId,
+                Vout = 1
+            };
+            var a = new CreateRawTransactionAmount
+            {
+                Address = four,
+                Qty = 1
+            };
+
+            var rawTransaction = await client.CreateRawTransactionAync(new List<CreateRawTransactionTxIn> {t}, new List<CreateRawTransactionAmount> {a});
+            rawTransaction.AssertOk();
+            Console.WriteLine(rawTransaction.Result);
+            Console.WriteLine();
+
+            // sign raw transaction...
+            Console.WriteLine("*** signrawtransaction ***");
+            var signRaw = await client.SignRawTransactionAsync(rawTransaction.Result);
+            signRaw.AssertOk();
+            Console.WriteLine(signRaw.Result);
+            Console.WriteLine();
+
+            // send raw transaction...
+            Console.WriteLine("*** sendrawtransaction ***");
+            var sentRaw = await client.SendRawTransactionAsync(signRaw.Result.Hex);
+            sentRaw.AssertOk();
+            Console.WriteLine(sentRaw.Result);
         }
 
         private string GetRandomName(string name)
