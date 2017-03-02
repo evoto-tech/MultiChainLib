@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MultiChainLib.Client;
 using Newtonsoft.Json;
 
-namespace MultiChainLib
+namespace MultiChainLib.Model
 {
     public class VerboseTransactionResponse
     {

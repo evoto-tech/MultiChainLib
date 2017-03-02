@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MultiChainLib.Model;
 using Newtonsoft.Json;
 
 namespace MultiChainLib.Client

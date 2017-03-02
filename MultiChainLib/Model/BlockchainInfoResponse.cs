@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MultiChainLib
+namespace MultiChainLib.Model
 {
     public class BlockchainInfoResponse
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Dynamic;
 
-namespace MultiChainLib
+namespace MultiChainLib.Model
 {
     public class CreateRawTransactionAmount
     {
