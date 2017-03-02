@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MultiChainLib
+namespace MultiChainLib.Client
 {
     public class MultiChainClient
     {
@@ -39,14 +39,11 @@ namespace MultiChainLib
                 var protocol = "https";
                 if (!UseSsl)
                     protocol = "http";
-                return string.Format("{0}://{1}:{2}/", protocol, Hostname, Port);
+                return $"{protocol}://{Hostname}:{Port}/";
             }
         }
 
-        public bool HasCredentials
-        {
-            get { return !string.IsNullOrEmpty(Username); }
-        }
+        public bool HasCredentials => !string.IsNullOrEmpty(Username);
 
         public event EventHandler<EventArgs<JsonRpcRequest>> Executing;
 
@@ -69,8 +66,7 @@ namespace MultiChainLib
         public Task<JsonRpcResponse<string>> SendWithMetadataAsync(string address, string assetName, decimal amount,
             byte[] dataHex)
         {
-            var theAmount = new Dictionary<string, object>();
-            theAmount[assetName] = amount;
+            var theAmount = new Dictionary<string, object> {[assetName] = amount};
             return ExecuteAsync<string>("sendwithmetadata", 0, address, theAmount, FormatHex(dataHex));
         }
 
@@ -78,8 +74,7 @@ namespace MultiChainLib
             string comment = null,
             string commentTo = null)
         {
-            var theAmount = new Dictionary<string, object>();
-            theAmount[assetName] = amount;
+            var theAmount = new Dictionary<string, object> {[assetName] = amount};
             return ExecuteAsync<string>("sendtoaddress", 0, address, theAmount, comment ?? string.Empty,
                 commentTo ?? string.Empty);
         }
@@ -87,8 +82,7 @@ namespace MultiChainLib
         public Task<JsonRpcResponse<string>> SendWithMetadataFromAsync(string fromAddress, string toAddress,
             string assetName, decimal amount, byte[] dataHex)
         {
-            var theAmount = new Dictionary<string, object>();
-            theAmount[assetName] = amount;
+            var theAmount = new Dictionary<string, object> {[assetName] = amount};
             return ExecuteAsync<string>("sendwithmetadatafrom", 0, fromAddress, toAddress, theAmount, FormatHex(dataHex));
         }
 
@@ -204,7 +198,7 @@ namespace MultiChainLib
         {
             return ExecuteAsync<string>("issue", 0, issueAddress, assetName, quantity, units);
 /*, nativeAmount, comment,
-                                                                                                                        commentTo, startBlock, endBlock);*/
+                                                                                                                                    commentTo, startBlock, endBlock);*/
         }
 
         public Task<JsonRpcResponse<string>> IssueFromAsync(string fromAddress, string toAddress, string assetName,
@@ -768,26 +762,18 @@ namespace MultiChainLib
                 }
 
                 throw new InvalidOperationException(
-                    string.Format("Failed to issue JSON-RPC request.\r\nData: {0}\r\nURL: {1}\r\nJSON: {2}", errorData,
-                        url, jsonOut), ex);
+                    $"Failed to issue JSON-RPC request.\r\nData: {errorData}\r\nURL: {url}\r\nJSON: {jsonOut}", ex);
             }
         }
 
         protected virtual void OnExecuting(EventArgs<JsonRpcRequest> e)
         {
-            if (Executing != null)
-                Executing(this, e);
+            Executing?.Invoke(this, e);
         }
 
         private ICredentials GetCredentials()
         {
-            if (HasCredentials)
-                return new NetworkCredential(Username, Password);
-            return null;
-        }
-
-        private class NullResponse
-        {
+            return HasCredentials ? new NetworkCredential(Username, Password) : null;
         }
     }
 }

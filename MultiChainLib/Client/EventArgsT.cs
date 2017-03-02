@@ -1,22 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MultiChainLib
+namespace MultiChainLib.Client
 {
     public class EventArgs<T> : EventArgs
     {
-        public T Item { get; set; }
-
         public EventArgs()
         {
         }
 
         public EventArgs(T item)
         {
-            this.Item = item;
+            Item = item;
         }
+
+        public T Item { get; set; }
     }
 }

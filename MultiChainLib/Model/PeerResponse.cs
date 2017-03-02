@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class PeerResponse
     {
+        public PeerResponse()
+        {
+            Inflight = new List<object>();
+        }
+
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -65,10 +66,5 @@ namespace MultiChainLib
 
         [JsonProperty("inflight")]
         public List<object> Inflight { get; set; }
-
-        public PeerResponse()
-        {
-            this.Inflight = new List<object>();
-        }
     }
 }

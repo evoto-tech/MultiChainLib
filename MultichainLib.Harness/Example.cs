@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MultiChainLib.Client;
 
 namespace MultiChainLib.Harness
 {
@@ -21,7 +21,8 @@ namespace MultiChainLib.Harness
 
         internal async Task RunAsync()
         {
-            var client = new MultiChainClient("192.168.40.130", 50001, false, "multichainrpc", "J1Bs45oEms6LRCcUw7CykoZ9ccUCTJbuwfdktk4N7M1Q", "chain_b82037073985329be60ae98e30");
+            var client = new MultiChainClient("192.168.40.130", 50001, false, "multichainrpc",
+                "J1Bs45oEms6LRCcUw7CykoZ9ccUCTJbuwfdktk4N7M1Q", "chain_b82037073985329be60ae98e30");
 //            var client = new MultiChainClient("localhost", 8911, null, null, "chain_2fb1bbf830bf49f6722abc6aae", "493bacb6e18601794a7b99bc2c444decd4e343ef9af8eabddca6d0f64bffd3b3");
             //var client = new MultiChainClient("rpc.pbjcloud.com", 443, true, null, null, "chain_4662dcf2e58c1daf3a5a2cf0e0", "23da5aecda55b1dd0613018265a35a0673f73398c571f5e295f9dd2a6ec64fd2");
 
@@ -102,7 +103,10 @@ namespace MultiChainLib.Harness
             Console.WriteLine("*** issue ***");
             var assetName = "asset_" + Guid.NewGuid().ToString().Replace("-", "").Substring(0, 24);
             Console.WriteLine("Asset name: " + assetName);
-            var issueAddress = await CreateAddressAsync(client, BlockchainPermissions.Issue | BlockchainPermissions.Receive | BlockchainPermissions.Send);
+            var issueAddress =
+                await
+                    CreateAddressAsync(client,
+                        BlockchainPermissions.Issue | BlockchainPermissions.Receive | BlockchainPermissions.Send);
             var asset = await client.IssueAsync(issueAddress, assetName, 1000000, 0.1M);
             asset.AssertOk();
             Console.WriteLine("Issue transaction ID: " + asset.Result);
@@ -135,7 +139,7 @@ namespace MultiChainLib.Harness
             }
 
             // create an address...
-            var recipient = await this.CreateAddressAsync(client, BlockchainPermissions.Send | BlockchainPermissions.Receive);
+            var recipient = await CreateAddressAsync(client, BlockchainPermissions.Send | BlockchainPermissions.Receive);
 
             // send with metadata...
             Console.WriteLine("*** sendwithmetadata ***");
@@ -150,7 +154,7 @@ namespace MultiChainLib.Harness
             var retrieved = await client.GetRawTransactionVerboseAsync(sendResult.Result);
             retrieved.AssertOk();
             Console.WriteLine("ID: {0}", retrieved.Result.TxId);
-            for(var index = 0; index < retrieved.Result.Data.Count; index++)
+            for (var index = 0; index < retrieved.Result.Data.Count; index++)
             {
                 Console.WriteLine("Data: " + retrieved.Result.Data[index]);
 
@@ -170,7 +174,7 @@ namespace MultiChainLib.Harness
 
             // grant permissions...
             Console.WriteLine("*** grant ***");
-            var perms = await client.GrantAsync(new List<string>() { newAddress.Result }, permissions);
+            var perms = await client.GrantAsync(new List<string> {newAddress.Result}, permissions);
             Console.WriteLine(perms.RawJson);
             perms.AssertOk();
 

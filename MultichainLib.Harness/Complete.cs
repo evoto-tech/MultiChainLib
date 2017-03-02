@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MultiChainLib.Client;
 
 namespace MultiChainLib.Harness
 {
@@ -217,7 +218,8 @@ namespace MultiChainLib.Harness
             Console.WriteLine("*** getnettotals ***");
             var getNetTotals = await client.GetNetTotalsAsync();
             getNetTotals.AssertOk();
-            Console.WriteLine("Received: {0}, sent: {1}:, time: {2}", getNetTotals.Result.TotalsBytesRecv, getNetTotals.Result.TotalsBytesSent, getNetTotals.Result.TimeMillis);
+            Console.WriteLine("Received: {0}, sent: {1}:, time: {2}", getNetTotals.Result.TotalsBytesRecv,
+                getNetTotals.Result.TotalsBytesSent, getNetTotals.Result.TimeMillis);
             Console.WriteLine();
 
             // get peer info...
@@ -259,7 +261,7 @@ namespace MultiChainLib.Harness
             Console.WriteLine("*** getaddresses ***");
             var getAddresses = await client.GetAddressesAsync();
             getAddresses.AssertOk();
-            foreach(var address in getAddresses.Result)
+            foreach (var address in getAddresses.Result)
                 Console.WriteLine(address);
             Console.WriteLine();
 
@@ -473,7 +475,7 @@ namespace MultiChainLib.Harness
             Console.WriteLine("*** getrawtransaction (verbose) ***");
             var getRawTransactionVerbose = await client.GetRawTransactionVerboseAsync(txId);
             getRawTransactionVerbose.AssertOk();
-            foreach(var walk in getRawTransactionVerbose.Result.Data)
+            foreach (var walk in getRawTransactionVerbose.Result.Data)
                 Console.WriteLine(walk);
             Console.WriteLine();
 
@@ -524,28 +526,37 @@ namespace MultiChainLib.Harness
             Console.WriteLine();
 
             // one, two... 
-            var one = await CreateAddressAsync(client, BlockchainPermissions.Issue | BlockchainPermissions.Send | BlockchainPermissions.Receive);
+            var one =
+                await
+                    CreateAddressAsync(client,
+                        BlockchainPermissions.Issue | BlockchainPermissions.Send | BlockchainPermissions.Receive);
             var two = await CreateAddressAsync(client, BlockchainPermissions.Send | BlockchainPermissions.Receive);
             var three = await CreateAddressAsync(client, BlockchainPermissions.Send | BlockchainPermissions.Receive);
             var four = await CreateAddressAsync(client, BlockchainPermissions.Send | BlockchainPermissions.Receive);
 
             // revoke...
             Console.WriteLine("*** revoke ***");
-            var revoke = await client.RevokeAsync(new List<string>() { three }, BlockchainPermissions.Send);
+            var revoke = await client.RevokeAsync(new List<string> {three}, BlockchainPermissions.Send);
             revoke.AssertOk();
             Console.WriteLine(revoke.Result);
             Console.WriteLine();
 
             // revoke...
             Console.WriteLine("*** revokefrom ***");
-            var revokeFrom = await client.RevokeFromAsync(listPermissions.Result.First().Address, new List<string>() { three }, BlockchainPermissions.Receive);
+            var revokeFrom =
+                await
+                    client.RevokeFromAsync(listPermissions.Result.First().Address, new List<string> {three},
+                        BlockchainPermissions.Receive);
             revokeFrom.AssertOk();
             Console.WriteLine(revokeFrom.Result);
             Console.WriteLine();
 
             // grant from...
             Console.WriteLine("*** grantfrom ***");
-            var grantFrom = await client.GrantFromAsync(listPermissions.Result.First().Address, new List<string>() { two }, BlockchainPermissions.Send | BlockchainPermissions.Receive);
+            var grantFrom =
+                await
+                    client.GrantFromAsync(listPermissions.Result.First().Address, new List<string> {two},
+                        BlockchainPermissions.Send | BlockchainPermissions.Receive);
             grantFrom.AssertOk();
             Console.WriteLine(grantFrom.Result);
             Console.WriteLine();
@@ -580,11 +591,12 @@ namespace MultiChainLib.Harness
                     break;
             }
             while (toUse.Count < 5)
-                toUse.Add(await this.CreateAddressAsync(client, BlockchainPermissions.Receive));
+                toUse.Add(await CreateAddressAsync(client, BlockchainPermissions.Receive));
             Console.WriteLine("*** createmultisig ***");
             var createMultiSig = await client.CreateMultiSigAsync(5, toUse);
             createMultiSig.AssertOk();
-            Console.WriteLine("{0}, redeemScript: {1}", createMultiSig.Result.Address, createMultiSig.Result.RedeemScript);
+            Console.WriteLine("{0}, redeemScript: {1}", createMultiSig.Result.Address,
+                createMultiSig.Result.RedeemScript);
             Console.WriteLine();
 
             Console.WriteLine("*** decodescript ***");
@@ -602,7 +614,7 @@ namespace MultiChainLib.Harness
 
             // issue...
             Console.WriteLine("*** issue ***");
-            var assetName = this.GetRandomName("asset"); 
+            var assetName = GetRandomName("asset");
             var issue = await client.IssueAsync(one, assetName, 1000000, 0.1M);
             Console.WriteLine(issue.Result);
             Console.WriteLine();
@@ -622,10 +634,8 @@ namespace MultiChainLib.Harness
                 assets.AssertOk();
                 AssetResponse found = null;
                 foreach (var walk in assets.Result)
-                {
                     if (walk.Name == assetName)
                         found = walk;
-                }
                 Console.WriteLine();
 
                 // have we found it?
@@ -715,7 +725,10 @@ namespace MultiChainLib.Harness
                 Qty = 1
             };
 
-            var rawTransaction = await client.CreateRawTransactionAync(new List<CreateRawTransactionTxIn> {t}, new List<CreateRawTransactionAmount> {a});
+            var rawTransaction =
+                await
+                    client.CreateRawTransactionAync(new List<CreateRawTransactionTxIn> {t},
+                        new List<CreateRawTransactionAmount> {a});
             rawTransaction.AssertOk();
             Console.WriteLine(rawTransaction.Result);
             Console.WriteLine();
@@ -750,7 +763,7 @@ namespace MultiChainLib.Harness
 
             // grant permissions...
             Console.WriteLine("*** grant ***");
-            var perms = await client.GrantAsync(new List<string>() { newAddress.Result }, permissions);
+            var perms = await client.GrantAsync(new List<string> {newAddress.Result}, permissions);
             Console.WriteLine(perms.RawJson);
             perms.AssertOk();
 

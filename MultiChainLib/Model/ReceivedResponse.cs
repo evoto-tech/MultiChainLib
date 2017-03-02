@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class ReceivedResponse
     {
+        public ReceivedResponse()
+        {
+            TxIds = new List<string>();
+        }
+
         [JsonProperty("address")]
         public string Address { get; set; }
 
@@ -23,10 +24,5 @@ namespace MultiChainLib
 
         [JsonProperty("txids")]
         public List<string> TxIds { get; set; }
-
-        public ReceivedResponse()
-        {
-            this.TxIds = new List<string>();
-        }
     }
 }

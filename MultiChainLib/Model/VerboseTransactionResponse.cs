@@ -1,14 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MultiChainLib.Client;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class VerboseTransactionResponse
     {
+        public VerboseTransactionResponse()
+        {
+            Vin = new List<TransactionVin>();
+            Vout = new List<TransactionVout>();
+            Data = new List<string>();
+        }
+
         [JsonProperty("hex")]
         public string Hex { get; set; }
 
@@ -33,22 +38,12 @@ namespace MultiChainLib
         [JsonIgnore]
         public byte[] DataAsBytes
         {
-            get
-            {
-                throw new NotImplementedException("This operation has not been implemented.");
-            }
-        }
-
-        public VerboseTransactionResponse()
-        {
-            this.Vin = new List<TransactionVin>();
-            this.Vout = new List<TransactionVout>();
-            this.Data = new List<string>();
+            get { throw new NotImplementedException("This operation has not been implemented."); }
         }
 
         public byte[] GetDataAsBytes(int index)
         {
-            return MultiChainClient.ParseHexString(this.Data[index]);
+            return MultiChainClient.ParseHexString(Data[index]);
         }
     }
 }

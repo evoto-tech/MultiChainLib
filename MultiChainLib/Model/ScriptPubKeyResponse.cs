@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class ScriptPubKeyResponse
     {
+        public ScriptPubKeyResponse()
+        {
+            Addresses = new List<string>();
+        }
+
         [JsonProperty("asm")]
         public string Asm { get; set; }
 
@@ -20,10 +21,5 @@ namespace MultiChainLib
 
         [JsonProperty("addresses")]
         public List<string> Addresses { get; set; }
-
-        public ScriptPubKeyResponse()
-        {
-            this.Addresses = new List<string>();
-        }
     }
 }

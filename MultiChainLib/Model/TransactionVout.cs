@@ -1,14 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class TransactionVout
     {
+        public TransactionVout()
+        {
+            Assets = new List<object>();
+            Permissions = new List<PermissionsResponse>();
+        }
+
         [JsonProperty("value")]
         public decimal Value { get; set; }
 
@@ -23,11 +25,5 @@ namespace MultiChainLib
 
         [JsonProperty("permissions")]
         public List<PermissionsResponse> Permissions { get; set; }
-
-        public TransactionVout()
-        {
-            this.Assets = new List<object>();
-            this.Permissions = new List<PermissionsResponse>();
-        }
     }
 }

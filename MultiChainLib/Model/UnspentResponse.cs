@@ -1,14 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class UnspentResponse
     {
+        public UnspentResponse()
+        {
+            Assets = new List<UnspentAssetResponse>();
+            Permissions = new List<PermissionsResponse>();
+        }
+
         [JsonProperty("txid")]
         public string TxId { get; set; }
 
@@ -41,11 +43,5 @@ namespace MultiChainLib
 
         [JsonProperty("permissions")]
         public List<PermissionsResponse> Permissions { get; set; }
-
-        public UnspentResponse()
-        {
-            this.Assets = new List<UnspentAssetResponse>();
-            this.Permissions = new List<PermissionsResponse>();
-        }
     }
 }

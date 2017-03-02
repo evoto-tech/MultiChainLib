@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class ScriptResponse
     {
+        public ScriptResponse()
+        {
+            Addresses = new List<string>();
+        }
+
         [JsonProperty("asm")]
         public string Asm { get; set; }
 
@@ -23,10 +24,5 @@ namespace MultiChainLib
 
         [JsonProperty("p2sh")]
         public string P2Sh { get; set; }
-
-        public ScriptResponse()
-        {
-            this.Addresses = new List<string>();
-        }
     }
 }

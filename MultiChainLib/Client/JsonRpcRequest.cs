@@ -1,94 +1,57 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace MultiChainLib
+namespace MultiChainLib.Client
 {
     public class JsonRpcRequest
     {
-        public Dictionary<string, object> Values { get; private set; }
-
         public JsonRpcRequest()
         {
-            this.Values = new Dictionary<string, object>();
+            Values = new Dictionary<string, object>();
         }
+
+        public Dictionary<string, object> Values { get; }
 
         internal string Method
         {
-            get
-            {
-                return this.GetValue<string>("method");
-            }
-            set
-            {
-                this.SetValue("method", value);
-            }
+            get { return GetValue<string>("method"); }
+            set { SetValue("method", value); }
         }
 
         internal object[] Params
         {
-            get
-            {
-                return this.GetValue<object[]>("params");
-            }
-            set
-            {
-                this.SetValue("params", value);
-            }
+            get { return GetValue<object[]>("params"); }
+            set { SetValue("params", value); }
         }
 
 
         internal int Id
         {
-            get
-            {
-                return this.GetValue<int>("id");
-            }
-            set
-            {
-                this.SetValue("int", value);
-            }
+            get { return GetValue<int>("id"); }
+            set { SetValue("int", value); }
         }
 
         internal string ChainName
         {
-            get
-            {
-                return this.GetValue<string>("chain_name");
-            }
-            set
-            {
-                this.SetValue("chain_name", value);
-            }
+            get { return GetValue<string>("chain_name"); }
+            set { SetValue("chain_name", value); }
         }
 
         internal string ChainKey
         {
-            get
-            {
-                return this.GetValue<string>("chain_key");
-            }
-            set
-            {
-                this.SetValue("chain_key", value);
-            }
+            get { return GetValue<string>("chain_key"); }
+            set { SetValue("chain_key", value); }
         }
 
         private void SetValue(string name, object value)
         {
-            this.Values[name] = value;
+            Values[name] = value;
         }
 
         public T GetValue<T>(string name)
         {
-            if (this.Values.ContainsKey(name))
-                return (T)this.Values[name];
-            else
-                return default(T);
-       }
-
+            if (Values.ContainsKey(name))
+                return (T) Values[name];
+            return default(T);
+        }
     }
 }

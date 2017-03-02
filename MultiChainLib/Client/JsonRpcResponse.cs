@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace MultiChainLib
+namespace MultiChainLib.Client
 {
     public class JsonRpcResponse<T>
     {
@@ -23,8 +19,8 @@ namespace MultiChainLib
 
         public void AssertOk()
         {
-            if (!(string.IsNullOrEmpty(this.Error)))
-                throw new InvalidOperationException("Error(s) occurred: " + this.Error);
+            if (!string.IsNullOrEmpty(Error))
+                throw new InvalidOperationException("Error(s) occurred: " + Error);
         }
     }
 }

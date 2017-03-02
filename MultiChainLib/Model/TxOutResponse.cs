@@ -1,14 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class TxOutResponse
     {
+        public TxOutResponse()
+        {
+            Assets = new List<TxAssetResponse>();
+            Permissions = new List<object>();
+        }
+
         [JsonProperty("bestblock")]
         public string BestBlock { get; set; }
 
@@ -29,11 +31,5 @@ namespace MultiChainLib
 
         [JsonProperty("permissions")]
         public List<object> Permissions { get; set; }
-
-        public TxOutResponse()
-        {
-            this.Assets = new List<TxAssetResponse>();
-            this.Permissions = new List<object>();
-        }
     }
 }

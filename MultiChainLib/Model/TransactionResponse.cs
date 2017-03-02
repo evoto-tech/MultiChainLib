@@ -1,14 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MultiChainLib
 {
     public class TransactionResponse
     {
+        public TransactionResponse()
+        {
+            WalletConflicts = new List<object>();
+        }
+
         [JsonProperty("account")]
         public string Account { get; set; }
 
@@ -47,10 +48,5 @@ namespace MultiChainLib
 
         [JsonProperty("timereceived")]
         public long TimeReceived { get; set; }
-
-        public TransactionResponse()
-        {
-            this.WalletConflicts = new List<object>();
-        }
     }
 }
