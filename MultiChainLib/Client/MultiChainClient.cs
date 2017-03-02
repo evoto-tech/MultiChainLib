@@ -198,7 +198,7 @@ namespace MultiChainLib.Client
         {
             return ExecuteAsync<string>("issue", 0, issueAddress, assetName, quantity, units);
 /*, nativeAmount, comment,
-                                                                                                                                    commentTo, startBlock, endBlock);*/
+                                                                                                                                                            commentTo, startBlock, endBlock);*/
         }
 
         public Task<JsonRpcResponse<string>> IssueFromAsync(string fromAddress, string toAddress, string assetName,
@@ -775,5 +775,44 @@ namespace MultiChainLib.Client
         {
             return HasCredentials ? new NetworkCredential(Username, Password) : null;
         }
+
+        #region Streams
+
+        public Task<JsonRpcResponse<string>> CreateStreamAsync(string name, bool open)
+        {
+            return ExecuteAsync<string>("create", 0, "stream", name, open);
+        }
+
+        public Task<JsonRpcResponse<string>> CreateStreamFromAsync(string fromAddress, string name, bool open)
+        {
+            return ExecuteAsync<string>("create", 0, fromAddress, "stream", name, open);
+        }
+
+        public Task<JsonRpcResponse<List<ListStreamResponse>>> ListStreams(string streams = "*")
+        {
+            return ExecuteAsync<List<ListStreamResponse>>("liststreams", 0, streams);
+        }
+
+        public Task<JsonRpcResponse<string>> PublishAsync(string stream, string key, byte[] data)
+        {
+            return ExecuteAsync<string>("publish", 0, stream, key, FormatHex(data));
+        }
+
+        public Task<JsonRpcResponse<string>> PublishFromAsync(string fromAddress, string stream, string key, byte[] data)
+        {
+            return ExecuteAsync<string>("publishfrom", 0, fromAddress, stream, key, FormatHex(data));
+        }
+
+        public Task<JsonRpcResponse<List<ListStreamKeysResponse>>> ListStreamKeys(string stream, string keys = "*")
+        {
+            return ExecuteAsync<List<ListStreamKeysResponse>>("liststreamkeys", 0, stream, keys);
+        }
+
+        public Task<JsonRpcResponse<List<ListStreamKeyItemsResponse>>> ListStreamKeyItems(string stream, string key)
+        {
+            return ExecuteAsync<List<ListStreamKeyItemsResponse>>("liststreamkeyitems", 0, stream, key);
+        }
+
+        #endregion
     }
 }
