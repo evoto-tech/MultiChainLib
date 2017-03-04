@@ -201,8 +201,7 @@ namespace MultiChainLib.Client
         public Task<JsonRpcResponse<string>> IssueAsync(string issueAddress, object assetParams, int quantity,
             decimal units)
         {
-            var assetParamsString = JsonConvert.SerializeObject(assetParams);
-            return ExecuteAsync<string>("issue", 0, issueAddress, assetParamsString, quantity, units);
+            return ExecuteAsync<string>("issue", 0, issueAddress, assetParams, quantity, units);
         }
 
         public Task<JsonRpcResponse<string>> IssueFromAsync(string fromAddress, string toAddress, string assetName,
@@ -215,8 +214,7 @@ namespace MultiChainLib.Client
             int quantity,
             decimal units)
         {
-            var assetParamsString = JsonConvert.SerializeObject(assetParams);
-            return ExecuteAsync<string>("issuefrom", 0, fromAddress, issueAddress, assetParamsString, quantity, units);
+            return ExecuteAsync<string>("issuefrom", 0, fromAddress, issueAddress, assetParams, quantity, units);
         }
 
         public Task<JsonRpcResponse<string>> IssueMoreAsync(string issueAddress, string assetName, int quantity)
