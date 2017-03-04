@@ -375,6 +375,17 @@ namespace MultiChainLib.Client
             return ExecuteAsync<WalletInfoResponse>("getwalletinfo", 0);
         }
 
+        public Task<JsonRpcResponse<List<TransactionDetailsResponse>>> ListAddressTransactionsAsync(string address, int count = 10,
+            int skip = 0)
+        {
+            return ExecuteAsync<List<TransactionDetailsResponse>>("listaddresstransactions", 0, address, count, skip);
+        }
+
+        public Task<JsonRpcResponse<List<TransactionDetailsResponse>>> ListWalletTransactions(int count = 10, int skip = 0)
+        {
+            return ExecuteAsync<List<TransactionDetailsResponse>>("listwallettransactions", 0, count, skip);
+        }
+
         public Task<JsonRpcResponse<decimal>> EstimateFeeAsync(int numBlocks)
         {
             return ExecuteAsync<decimal>("estimatefee", 0, numBlocks);

@@ -81,8 +81,10 @@
     <Compile Include="Model\ScriptResponse.cs" />
     <Compile Include="Model\ScriptSigResponse.cs" />
     <Compile Include="Model\SignRawTransactionResponse.cs" />
+    <Compile Include="Model\TransactionDetailsResponse.cs" />
     <Compile Include="Model\TransactionResponse.cs" />
     <Compile Include="Model\ScriptPubKeyResponse.cs" />
+    <Compile Include="Model\TransactionBalanceResponse.cs" />
     <Compile Include="Model\TxAssetResponse.cs" />
     <Compile Include="Model\TxOutResponse.cs" />
     <Compile Include="Model\TxOutSetInfoResponse.cs" />
