@@ -208,16 +208,15 @@ namespace MultiChainLib.Client
             return ExecuteAsync<string>("issuefrom", 0, fromAddress, toAddress, assetName, quantity, units);
         }
 
-        public Task<JsonRpcResponse<string>> IssueMoreAsync(string issueAddress, string assetName, int quantity,
-            decimal units)
+        public Task<JsonRpcResponse<string>> IssueMoreAsync(string issueAddress, string assetName, int quantity)
         {
-            return ExecuteAsync<string>("issuemore", 0, issueAddress, assetName, quantity, units);
+            return ExecuteAsync<string>("issuemore", 0, issueAddress, assetName, quantity);
         }
 
         public Task<JsonRpcResponse<string>> IssueMoreFromAsync(string fromAddress, string toAddress, string assetName,
-            int quantity, decimal units)
+            int quantity)
         {
-            return ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity, units);
+            return ExecuteAsync<string>("issuemorefrom", 0, fromAddress, toAddress, assetName, quantity);
         }
 
         public Task<JsonRpcResponse<List<AssetResponse>>> ListAssetsAsync()
