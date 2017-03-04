@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -719,6 +720,14 @@ namespace MultiChainLib.Client
             foreach (var b in bs)
                 builder.Append(b.ToString("x2"));
             return builder.ToString();
+        }
+
+        public static byte[] ReadHex(string hex)
+        {
+            return Enumerable.Range(0, hex.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                .ToArray();
         }
 
         private async Task<JsonRpcResponse<T>> ExecuteAsync<T>(string method, int id, params object[] args)
