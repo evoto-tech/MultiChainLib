@@ -722,14 +722,6 @@ namespace MultiChainLib.Client
             return builder.ToString();
         }
 
-        public static byte[] ReadHex(string hex)
-        {
-            return Enumerable.Range(0, hex.Length)
-                .Where(x => x % 2 == 0)
-                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
-                .ToArray();
-        }
-
         private async Task<JsonRpcResponse<T>> ExecuteAsync<T>(string method, int id, params object[] args)
         {
             var ps = new JsonRpcRequest
