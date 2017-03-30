@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MultiChainLib.Model;
 using Newtonsoft.Json;
@@ -24,6 +25,8 @@ namespace MultiChainLib.Client
             Password = password;
             ChainName = chainName;
             ChainKey = chainKey;
+
+            _semaphore = new SemaphoreSlim(2);
         }
 
         private string Hostname { get; }
@@ -33,6 +36,8 @@ namespace MultiChainLib.Client
         private string ChainKey { get; }
         private string Username { get; }
         private string Password { get; }
+
+        private readonly SemaphoreSlim _semaphore;
 
         private string ServiceUrl
         {
@@ -740,6 +745,8 @@ namespace MultiChainLib.Client
             var url = ServiceUrl;
             try
             {
+                await _semaphore.WaitAsync(TimeSpan.FromMinutes(1));
+
                 var request = WebRequest.CreateHttp(url);
                 request.Credentials = GetCredentials();
                 request.Method = "POST";
@@ -758,6 +765,8 @@ namespace MultiChainLib.Client
                     jsonIn = await new StreamReader(stream).ReadToEndAsync();
                 }
 
+                _semaphore.Release();
+
                 // return...
                 JsonRpcResponse<T> theResult = null;
                 try
@@ -773,6 +782,8 @@ namespace MultiChainLib.Client
             }
             catch (Exception ex)
             {
+                _semaphore.Release();
+
                 var walk = ex;
                 string errorData = null;
                 while (walk != null)
